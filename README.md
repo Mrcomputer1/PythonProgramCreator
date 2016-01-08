@@ -1,5 +1,7 @@
 # Mrcomputer1's Python Program Creator
 
+[![Join the chat at https://gitter.im/Mrcomputer1/PythonProgramCreator](https://badges.gitter.im/Mrcomputer1/PythonProgramCreator.svg)](https://gitter.im/Mrcomputer1/PythonProgramCreator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Developers
 
 Mrcomputer1 - Lead Developer
