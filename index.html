@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Python Program Creator</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="base64.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="script.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	</head>
+	<body>
+		<dialog class="dialog-1" id="dialog-compileoutput" style="display:none">
+			<header><h4>Program</h4></header>
+			<hr color='grey'>
+			<content>
+				<div style='color:grey'>
+				Note: Save this as a .py file and then run it<br>
+				This uses Python 3
+				</div>
+				<textarea id='dialog-compileoutput-text' readonly rows="10" cols="65" style="resize:none"></textarea>
+			</content>
+			<hr color='grey'>
+			<footer>
+				<a class='compile' id='download-py-link' href='#' download='.py'>Download</a> <span class='compile close-dialog'>Close</span>
+			</footer>
+		</dialog>
+		<dialog class='dialog-2' id='dialog-runoutput' style="display:none">
+			<header><h4>Output</h4></header>
+			<hr color='grey'>
+			<content>
+				<div style='color:grey'>
+				The result may not be exactly like python's output<Br>
+				It is not run in Python
+				</div>
+				<textarea id='dialog-runoutput-text' readonly rows=10 cols=65 style='resize:none'></textarea>
+			</content>
+			<hr color='grey'>
+			<footer>
+				<a class='compile' id='download-output-link' href='#' download='.txt'>Download</a> <span class='compile close-dialog'>Close</span>
+			</footer>
+		</dialog>
+		<dialog class='dialog-3' id='dialog-save' style='display:none'>
+			<header><h4>Save your program</h4></header>
+			<hr color='grey'>
+			<content>
+				<div style='color:grey'>
+				You can click the download button below to save this program!<br>
+				It will be saved as <span id='programNameText'></span>.pysave! (If no name then will be save as pysave)
+				</div>
+			</content>
+			<hr color='grey'>
+			<footer>
+				<a class='compile' id='download-save-link' href='#' download='.pysave'>Save</a> <span class='compile close-dialog'>Close</span>
+			</footer>
+		</dialog>
+		<dialog class='dialog-4' id='dialog-open' style='display:none'>
+			<header><h4>Open your program</h4></header>
+			<hr color='grey'>
+			<content>
+				<div style='color:grey'>
+				You can select your save file to load your program
+				</div>
+				<input type='file' id='file'>
+			</content>
+			<hr color='grey'>
+			<footer>
+				<span class='compile close-dialog' id='open-file'>Open</span> <span class='compile close-dialog'>Don't Open</span>
+			</footer>
+		</dialog>
+		<dialog class='dialog-5' id='dialog-about' style='display:none'>
+			<header><h4>About Python Program Creator</h4></header>
+			<hr color='grey'>
+			<content>
+				<div color='grey'>
+				Created by: Mrcomputer1<br>
+				Created in: HTML, JavaScript and CSS<br>
+				Tested in:<br>
+					Operating System: <span class='fa fa-windows' style='color:blue'></span> Windows 10 Home 64-bit<br>
+				    <span class='fa fa-firefox' style='color:orange'></span> Firefox 43.0.3 (Works, Used to create)<br>
+      				<span class='fa fa-chrome' style='color:yellow'></span> Chrome 47.0.2526.106 (Offical Build) m (32-bit) - JS: V8 4.7.80.25 (FAIL)<br>
+				    <span class='fa fa-edge' style='color:blue'></span> Microsoft Edge 20.10240.16384.0 (Works)<br>
+					<span class='fa fa-internet-explorer' style='color:lightblue'></span> Internet Explorer 11.0.10240.16603 (Works)<br>
+					<img src="pion_logo.png" width="20" height="20"> Pion 1.2.0, Electron v0.36.2 (FAIL)<br>
+					<img src="http://electron.atom.io/images/electron-icon.svg" width="20" height="20"> Electron v0.36.2 without Pion 1.2.0 (FAIL)<br>
+					<span class='fa fa-opera' style='color:red'></span> Opera 34.0.2036.25 (FAIL)
+				<br>Credits:<br>
+				    <img src="http://jquery.com/favicon.ico" width='20' height='20'> jQuery 2.1.4<br>
+					<span class='fa fa-flag'></span> Font Awesome 4.5.0<br>
+					<img src="http://mrcomputer1.tk/favicon.ico" width='20' height='20'> Mrcomputer1 <!--Correction: Mrcomputer1 IS AWESOME!!!! :D :D :D :D :D--><br>
+				</div>
+			</content>
+			<hr color='grey'>
+			<footer>
+				<span class='compile close-dialog'>Close</span>
+			</footer>
+		</dialog>
+		<table border="0" style='width:100%;height:100%'>
+			<tr style='height:10%'>
+				<td>
+					<span class='compile' id='save'>Save</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class='compile' id='open'>Open</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class='compile' id='compile'>Compile to Python</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class='compile' id='run'>Run</span>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class='compile' id='about'>About</span>
+				</td>
+			</tr>
+			<tr style='height:90%'>
+				<td class='td' style='width:40%'>
+					<table border="0">
+						<tr>
+							<td style='width:50%'>
+								<div class='area area-select' data-area="normal">Normal</div> <!--1-->
+								<div class='area area-unselect' data-area="files">Files</div> <!--3-->
+							</td>
+							<td style='width:50%'>
+								<div class='area area-unselect' data-area="data">Data</div> <!--2-->
+							</td>
+						</tr>
+						<tr><td><hr></td><td><hr></td></tr>
+						<tr><td>
+							<div id='area-normal' class='blockpane'>
+								<span class='block' data-block="print">Print <input type='text' class='input-s' data-block-input-id="1" readonly></span><br><br>
+								<span class='block' data-block="comment">Comment <input type='text' class='input-s' data-block-input-id="1" readonly></span> 
+							</div>
+							<div id='area-files' style='display:none' class='blockpane'>
+								<span class='block' data-block="openfile">Open File <input type='text' class='input-s' data-block-input-id="1" readonly> <select class='input-d' data-block-input-id="2" disabled><option value='' selected></option><option value='r'>Read</option><option value='w'>Write</option></select></span><br><br>
+								<span class='block' data-block="writetofile">Write <input type='text' class='input-s' data-block-input-id="1" readonly> to file <input type='text' class='input-s' data-block-input-id="2" readonly></span><br><br>
+								<span class='block' data-block="readtovar">Read <input type='text' class='input-s' data-block-input-id="1" readonly> to variable <input type='text' class='input-s' data-block-input-id="2" readonly></span><br><br>
+								<span class='block' data-block="closefile">Close File <input type='text' class='input-s' data-block-input-id="1" readonly></span><br><br>
+								<span class="block" data-block="writetofilevar">Write to <input type='text' class='input-s' data-block-input-id="1" readonly> from <input type='text' class='input-s' data-block-input-id="2" readonly></span>
+							</div>
+							<div id='area-data' style='display:none' class='blockpane'>
+								<span class='block' data-block="setvar">Set Variable Name: <input type='text' class='input-s' data-block-input-id="1" readonly> Value: <input type='text' class='input-s' data-block-input-id="2" readonly></span><br><br>
+								<span class='block' data-block="printvar">Print Variable <input type='text' class='input-s' data-block-input-id="1" readonly></span><br><br>
+								<span class='block' data-block="userinput">Ask user for <input type='text' class='input-s' data-block-input-id="1" readonly> save to <input type='text' class='input-s' data-block-input-id="2" readonly></span>
+							</div>
+						</td></tr>
+					</table>
+				<td class='td' style='width:60%' id='codearea'>
+					<span class='hat-block'>Program: <input type='text' id='program-name' class='input-s'></span><br><br>
+				</td>
+			</tr>
+		</table>
+		<div style='color:lightgrey;position:fixed;bottom:0;right:0;text-align:right;padding-right:5px;z-index:-999999;cursor:default'>
+			Python Program Creator v1.0.0 (source code version)<br>
+			Created by: Mrcomputer1<br>
+			<font color='red'>
+				Note: If you create a mod then read the modding guide on the github wiki<br>
+				If helping update include a <u>short</u> message below Created by that explains your update<br>
+				----your message will be removed when I update the version number. DO NOT UPDATE THE VERSION NUMBER YOURSELF
+			</font><br>
+		</div>
+	</body>
+</html>
